@@ -1,0 +1,23 @@
+language: rust
+sudo: false
+
+addons:
+  apt:
+    packages:
+      - libsox-dev
+
+rust:
+  - stable
+  - beta
+  - nightly
+
+matrix:
+  allow_failures:
+    - rust: nightly
+  fast_finish: true
+
+cache: cargo
+
+script:
+  - hash cargo-make || cargo install cargo-make
+  - cargo make ci-flow
