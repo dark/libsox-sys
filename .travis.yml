@@ -21,3 +21,16 @@ cache: cargo
 script:
   - hash cargo-make || cargo install cargo-make
   - cargo make ci-flow
+
+after_success: |
+  [ $TRAVIS_BRANCH = master ] &&
+  [ $TRAVIS_PULL_REQUEST = false ] &&
+  cargo doc &&
+  echo "<meta http-equiv=refresh content=0;url=`echo $TRAVIS_REPO_SLUG | sed 's/-sys/_sys/g' | cut -d '/' -f 2`/index.html>" > target/doc/index.html &&
+  pip install --user ghp-import &&
+  ghp-import -n target/doc &&
+  git push -fq https://${GH_TOKEN}@github.com/${TRAVIS_REPO_SLUG}.git gh-pages
+
+env:
+  global:
+    secure: mnxSzL4UJK/VF7Flhe2K3lx3kUnK8JQ/6L/UnqskqzEaGTd+Gs4epaD8ZO5GWsgZ7pCDq+jPpbmEPD2ipTbbmQqCKomCYJEfNA3njv7pQ38N1PXns5M/vQdJoy8zDOxAJ2mIvug9/6xWA+V8Nj9CbFbQDlHQLlIGqhvJqjpZQMiPEp5jZCLykm8hHhBiEL4bbrjHqS4hBRFzAvKIYLBiPpfNxLut5oh1R7Bkvo59YJDSrz87VubYykGM0ALkaqUaXuulwMN6eEKXd3/DoXLyGpGoPN7hXGB6hxnX+nSpYCuycmLepqSNCDEVCHxVCgIJ1P2FLq/4LyjNCedNHldbyqtOVr2ml8EjdraWfG4LLSAtqA1HZgTQABhVpQy5EfHVZUJkssERnoW1J9ESKJrsW3n2e7/LxKIAYC+Q0e9cyMrdSxsq0FmhFFbFXv9KeZnnY1fcLoR/AVSFisbG6Muwfh8ctQkWHWkx2cgK1dob9jvImNBwCrNDW+uORN0c/a+5QVHP18L4JZ4H9/MM1/ivQixjEVp+v9LXGAVN112vQtJ7JAysfcJaUIRYyY1ydYWGw+msT514OwsdhEEu2q6873VrV/aUy41UM+KE4A3X6FUYOpEfOvccJMa+NFHenkKZTgmRjy5s3/788i9009FPM/y0MXeqXjaC5w2UeS0zD08=
