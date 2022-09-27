@@ -1,6 +1,6 @@
 [package]
 name = "libsox-sys"
-version = "0.1.0"
+version = "0.1.2"
 authors = ["Vincent Tavernier <vince.tavernier@gmail.com>"]
 license = "MIT"
 readme = "README.md"
