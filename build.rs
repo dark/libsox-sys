@@ -13,10 +13,10 @@ fn main() {
         // The input header we would like to generate
         // bindings for.
         .header("wrapper.h")
-        // Only whitelist sox types
-        .whitelist_var("SOX_.*")
-        .whitelist_type("sox_.*")
-        .whitelist_function("sox_.*")
+        // Only allowlist sox types
+        .allowlist_var("SOX_.*")
+        .allowlist_type("sox_.*")
+        .allowlist_function("sox_.*")
         // Finish the builder and generate the bindings.
         .generate()
         // Unwrap the Result and panic on failure.
